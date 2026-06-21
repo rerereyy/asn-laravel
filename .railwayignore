@@ -1,0 +1,26 @@
+# Docs
+README.md
+*.md
+docs/
+
+# Env example (tidak perlu deploy)
+.env.example
+
+# Git
+.git/
+.gitignore
+
+# Local files
+node_modules/
+npm-debug.log
+yarn.lock
+
+# Testing
+phpunit.xml
+tests/
+
+# Cache
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
