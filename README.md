@@ -2,8 +2,6 @@
 
 ## Menjalankan project di komputer masing-masing
 
-Karena saat ini belum pakai database, kita fokus test frontend dulu.
-
 Setelah project di-clone atau di-download, buka folder project lalu jalankan perintah ini:
 
 ```bash
