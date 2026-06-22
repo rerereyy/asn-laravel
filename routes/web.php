@@ -21,8 +21,8 @@ Route::get('/', function () {
             'role'  => 'anggota'
         ],
         [
-            'nama'  => 'Violetta Wungubelen',
-            'nim'   => '123',
+            'nama'  => 'Maria Violeta V. Wungubelen',
+            'nim'   => '241110105',
             'role'  => 'anggota'
         ],
         [
