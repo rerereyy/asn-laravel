@@ -1,5 +1,26 @@
 # Panduan singkat commit dan push untuk kelompok
 
+## Persyaratan
+
+Pastikan sudah terpasang:
+
+- PHP 8.2 atau lebih baru
+- Composer
+- Node.js LTS (disarankan versi 22.x)
+- NPM (otomatis ikut terpasang bersama Node.js)
+- Git
+- GitHub Desktop
+
+Cek versi yang terpasang dengan:
+
+```bash
+php -v
+composer -V
+node -v
+npm -v
+git --version
+```
+
 ## Menjalankan project di komputer masing-masing
 
 Setelah project di-clone atau di-download, buka folder project lalu jalankan perintah ini:
@@ -35,7 +56,7 @@ Sebelum menekan tombol push ke branch `main`, pastikan semua anggota kelompok su
 
 1. Buka project ini dengan GitHub Desktop.
 2. Ubah file yang dibutuhkan.
-3. Isi pesan commit yang singkat, misalnya: `fathur: update halaman login`.
+3. Isi pesan commit yang sesuai dengan apa yang diubah.
 4. Klik `Commit to main`.
 5. Klik `Push origin` untuk mengirim perubahan ke GitHub.
 
