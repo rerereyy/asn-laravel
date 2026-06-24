@@ -6,11 +6,19 @@ return [
     'route' => 'home',
   ],
   [
-    'label' => 'Ide Project',
-    'route' => 'ideas.index'
+    'label' => 'Campaign',
+    'route' => 'campaigns.index',
   ],
   [
-    'label' => 'About Us',
-    'route' => 'about'
+    'label' => 'Dashboard',
+    'route' => 'dashboard',
+  ],
+  [
+    'label' => 'About',
+    'route' => 'about',
+  ],
+  [
+    'label' => 'Ide Project',
+    'route' => 'ideas.index'
   ]
 ];

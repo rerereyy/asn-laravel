@@ -6,7 +6,10 @@
     <div class="flex items-center justify-between">
       {{-- LOGO --}}
       <a href="/" class="overflow-hidden py-2 font-semibold">
-        <strong class="text-cyan-400">404 <span class="font-medium text-zinc-700">DevTeam.</span></strong>
+        <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
+          <span class="rounded-full bg-emerald-500 px-2 py-1 text-white">DK</span>
+          <span>DonasiKita</span>
+        </span>
       </a>
       {{-- Desktop menu --}}
       <div class="hidden items-center gap-1 self-stretch p-1 text-sm font-medium md:flex">
@@ -20,6 +23,19 @@
             {{ $menu['label'] }}
           </a>
         @endforeach
+      </div>
+
+      <div class="hidden items-center gap-2 pr-4 md:flex">
+        @auth
+          <a href="{{ route('dashboard') }}" class="rounded-full bg-emerald-500 px-4 py-2 text-sm text-white">Dashboard</a>
+          <form method="POST" action="{{ route('logout') }}" class="inline">
+            @csrf
+            <button class="rounded-full border border-emerald-500 px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50">Logout</button>
+          </form>
+        @else
+          <a href="{{ route('login') }}" class="rounded-full border border-emerald-500 bg-white px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-50">Login</a>
+          <a href="{{ route('register') }}" class="rounded-full bg-emerald-500 px-4 py-2 text-sm text-white">Register</a>
+        @endauth
       </div>
 
       <button class="pr-4 text-xl md:hidden" @click="open = !open">
