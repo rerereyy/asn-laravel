@@ -9,5 +9,7 @@ class ProjectIdea extends Model
     protected $fillable = [
         'title',
         'description',
+        'category',
+        'status',
     ];
 }
