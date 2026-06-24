@@ -17,7 +17,11 @@
     p {
         @apply text-gray-600;
     }
+    input,
+    textarea {
+        @apply focus:outline-2 focus:outline-cyan-500 rounded-md border border-neutral-200 p-2;
+    }
     button {
-        @apply cursor-pointer;
+        @apply cursor-pointer active:scale-95 focus:outline-2 focus:outline-cyan-500;
     }
 }
