@@ -25,9 +25,21 @@ class AboutController extends Controller
                 'role' => 'anggota',
             ],
             [
-                'id' => 4,
+                'id' => 3,
                 'nama' => 'Maria Violeta V. Wungubelen',
                 'nim' => '241110105',
+                'role' => 'anggota',
+            ],
+            [
+                'id' => 4,
+                'nama' => 'rey',
+                'nim' => '241110120',
+                'role' => 'anggota',
+            ],
+            [
+                'id' => 5,
+                'nama' => 'alio',
+                'nim' => '241110120',
                 'role' => 'anggota',
             ],
         ];
