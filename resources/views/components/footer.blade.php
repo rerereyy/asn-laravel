@@ -1,14 +1,17 @@
 <footer class="border-t border-zinc-200 bg-white py-12">
-  <div class="mx-auto flex max-w-6xl flex-col gap-10 px-4 md:flex-row md:justify-between md:items-start">
+  <div class="mx-auto flex max-w-6xl flex-col gap-10 px-4 md:flex-row md:items-start md:justify-between">
     <div class="space-y-4 md:max-w-sm">
       <div class="flex items-center gap-3 text-emerald-700">
-        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-lg font-bold">DK</span>
+        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-lg font-bold">
+          <img src="{{ asset('logo.png') }}" alt="logo donasi kita">
+        </span>
         <div>
           <p class="text-xl font-semibold">DonasiKita</p>
           <p class="text-sm text-slate-500">Berbagi Jadi Lebih Mudah</p>
         </div>
       </div>
-      <p class="text-sm text-slate-600">Platform donasi untuk membantu campaign kesehatan, pendidikan, bencana, dan sosial dengan identitas yang tepercaya.</p>
+      <p class="text-sm text-slate-600">Platform donasi untuk membantu campaign kesehatan, pendidikan, bencana, dan
+        sosial dengan identitas yang tepercaya.</p>
       <p class="text-sm text-slate-500">Email: support@donasikita.id · Telepon: +62 812 3456 7890</p>
     </div>
 

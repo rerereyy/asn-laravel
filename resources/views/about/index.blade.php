@@ -6,8 +6,8 @@
           the team
         </h1>
         <hr class="mx-auto mt-6 max-w-20 rounded-full border-2 border-zinc-300">
-        <p class="mt-4">
-          Orang-orang di balik layar pengembangan [nama project]
+        <p class="mt-4 text-lg font-medium">
+          Orang-orang di balik layar pengembangan Donasi Kita
         </p>
       </div>
     </div>

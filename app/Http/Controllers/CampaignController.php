@@ -2,21 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
+use App\Models\Comment;
+use App\Models\Donation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CampaignController extends Controller
 {
     public function index()
     {
+        $campaigns = Campaign::with(['user', 'donations'])
+            ->withSum('donations', 'amount')
+            ->withCount('donations')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('campaigns.index', [
-            'campaigns' => $this->campaigns(),
-            'totals' => $this->totals(),
+            'campaigns' => $campaigns,
         ]);
     }
 
     public function show($id)
     {
-        $campaign = $this->findCampaign($id);
+        $campaign = Campaign::with(['donations.user', 'comments.user'])->find($id);
 
         if (! $campaign) {
             abort(404);
@@ -24,8 +33,8 @@ class CampaignController extends Controller
 
         return view('campaigns.show', [
             'campaign' => $campaign,
-            'donations' => $this->campaignDonations($id),
-            'comments' => $this->campaignComments($id),
+            'donations' => $campaign->donations,
+            'comments' => $campaign->comments,
         ]);
     }
 
@@ -39,10 +48,11 @@ class CampaignController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:100',
-            'target' => 'required|numeric|min:1000',
+            'target_amount' => 'required|numeric|min:1000',
             'description' => 'required|string',
-            'cover_image' => 'nullable|url',
+            'cover_image' => 'required|image|max:2048',
         ]);
+<<<<<<< HEAD
     
         $campaign = [
             'id' => $this->nextCampaignId(),
@@ -53,21 +63,108 @@ class CampaignController extends Controller
             'donors' => 0,
             'status' => 'draft',
             'excerpt' => str()->limit($data['description'], 120),
-            'description' => $data['description'],
-            'cover_image' => $data['cover_image'] ?: 'https://images.unsplash.com/photo-1516569422542-23f5d04b9dca?auto=format&fit=crop&w=1200&q=80',
-            'deadline' => now()->addWeeks(4)->format('d M Y'),
-            'organizer' => 'DonasiKita',
-            'location' => 'Indonesia',
-        ];
+=======
 
-        session()->push('campaigns', $campaign);
+        $path = $request->file('cover_image')
+            ->store('campaigns', 'public');
+
+        Campaign::create([
+            'user_id' => auth()->id(),
+            'title' => $data['title'],
+            'category' => $data['category'],
+            'target_amount' => $data['target_amount'],
+            'current_amount' => 0,
+            'donor_count' => 0,
+            'status' => 'active',
+>>>>>>> c75f79e87b48931d73803e14e6191904b66f7b35
+            'description' => $data['description'],
+            'cover_image' => $path,
+            'deadline_at' => now()->addWeeks(4),
+        ]);
 
         return redirect()->route('campaigns.index')->with('success', 'Campaign baru berhasil ditambahkan.');
     }
 
+<<<<<<< HEAD
+=======
+    public function edit($id)
+    {
+        $campaign = Campaign::find($id);
+
+        if (! $campaign) {
+            abort(404);
+        }
+
+        return view('campaigns.edit', [
+            'campaign' => $campaign,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $campaign = Campaign::find($id);
+
+        if (! $campaign) {
+            abort(404);
+        }
+
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'category' => 'required|string|max:100',
+            'target_amount' => 'required|numeric|min:1000',
+            'description' => 'required|string',
+            'cover_image' => 'nullable|image|max:2048',
+            'status' => 'required|in:draft,active,completed,cancelled',
+        ]);
+
+        $path = $campaign->cover_image;
+
+        if ($request->hasFile('cover_image')) {
+            if ($campaign->cover_image) {
+                Storage::disk('public')->delete($campaign->cover_image);
+            }
+
+            $path = $request->file('cover_image')
+                ->store('campaigns', 'public');
+        }
+
+        $campaign->update([
+            'title' => $data['title'],
+            'category' => $data['category'],
+            'target_amount' => $data['target_amount'],
+            'description' => $data['description'],
+            'cover_image' => $path,
+            'status' => $data['status'],
+        ]);
+
+        return redirect()
+            ->route('campaigns.show', $campaign)
+            ->with('success', 'Campaign berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $campaign = Campaign::find($id);
+
+        if (! $campaign) {
+            abort(404);
+        }
+
+        if ($campaign->cover_image) {
+            Storage::disk('public')->delete($campaign->cover_image);
+        }
+
+        $campaign->delete();
+
+        return redirect()
+            ->route('campaigns.index')
+            ->with('success', 'Campaign berhasil dihapus.');
+    }
+
+>>>>>>> c75f79e87b48931d73803e14e6191904b66f7b35
     public function donate(Request $request, $id)
     {
-        $campaign = $this->findCampaign($id);
+        $campaign = Campaign::find($id);
 
         if (! $campaign) {
             abort(404);
@@ -79,22 +176,29 @@ class CampaignController extends Controller
             'is_anonymous' => 'nullable|boolean',
         ]);
 
-        $donation = [
-            'campaign_id' => $id,
-            'name' => $data['is_anonymous'] ? 'Anonim' : 'Pengguna DonasiKita',
-            'amount' => (int) $data['amount'],
-            'message' => $data['donor_message'] ?: 'Semoga bermanfaat untuk campaign ini.',
-            'date' => now()->format('d M Y'),
-        ];
+        $isAnonymous = $request->boolean('is_anonymous');
 
-        session()->push('donations', $donation);
+        Donation::create([
+            'campaign_id' => $id,
+            'user_id' => auth()->id(),
+            'amount' => $data['amount'],
+            'donor_message' => $data['donor_message'] ?: 'Semoga bermanfaat untuk campaign ini.',
+            'is_anonymous' => $isAnonymous,
+            'status' => 'paid',
+            'paid_at' => now(),
+        ]);
+
+        $campaign->update([
+            'current_amount' => $campaign->current_amount + $data['amount'],
+            'donor_count' => $campaign->donor_count + 1,
+        ]);
 
         return back()->with('success', 'Terima kasih atas donasi Anda!');
     }
 
     public function comment(Request $request, $id)
     {
-        $campaign = $this->findCampaign($id);
+        $campaign = Campaign::find($id);
 
         if (! $campaign) {
             abort(404);
@@ -104,16 +208,15 @@ class CampaignController extends Controller
             'content' => 'required|string|max:300',
         ]);
 
-        $comment = [
-            'name' => 'Pengguna DonasiKita',
+        Comment::create([
+            'campaign_id' => $id,
+            'user_id' => auth()->id(),
             'content' => $data['content'],
-            'date' => now()->format('d M Y'),
-        ];
-
-        session()->push("comments.$id", $comment);
+        ]);
 
         return back()->with('success', 'Komentar Anda telah ditambahkan.');
     }
+<<<<<<< HEAD
 
     private function campaigns()
     {
@@ -232,4 +335,6 @@ class CampaignController extends Controller
 
         return empty($campaigns) ? 1 : max(array_column($campaigns, 'id')) + 1;
     }
+=======
+>>>>>>> c75f79e87b48931d73803e14e6191904b66f7b35
 }

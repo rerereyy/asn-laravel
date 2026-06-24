@@ -13,8 +13,9 @@ Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.
 Route::get('/campaigns/create', [CampaignController::class, 'create'])->middleware('auth')->name('campaigns.create');
 Route::post('/campaigns', [CampaignController::class, 'store'])->middleware('auth')->name('campaigns.store');
 Route::get('/campaigns/{id}', [CampaignController::class, 'show'])->name('campaigns.show');
-Route::get('/campaigns/{id}/edit', [CampaignController::class, 'edit'])->name('campaigns.edit');
-Route::delete('/campaigns/{id}', [CampaignController::class, 'destroy'])->name('campaigns.destroy');
+Route::get('/campaigns/{id}/edit', [CampaignController::class, 'edit'])->middleware('auth')->name('campaigns.edit');
+Route::put('/campaigns/{id}', [CampaignController::class, 'update'])->middleware('auth')->name('campaigns.update');
+Route::delete('/campaigns/{id}', [CampaignController::class, 'destroy'])->middleware('auth')->name('campaigns.destroy');
 Route::post('/campaigns/{id}/donate', [CampaignController::class, 'donate'])->name('campaigns.donate');
 Route::post('/campaigns/{id}/comment', [CampaignController::class, 'comment'])->middleware('auth')->name('campaigns.comment');
 

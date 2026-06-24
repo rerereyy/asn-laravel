@@ -9,29 +9,27 @@ class AboutController extends Controller
     /**
      * Display a listing of the resource.
      */
-    static function getTeam()
+    public static function getTeam()
     {
-        return  [
+        return [
             [
                 'id' => 1,
-                'nama'  => 'Ferdiyansyah Pratama Putra',
-                'nim'   => '241110117',
-                'role'  => 'ketua'
+                'nama' => 'Ferdiyansyah Pratama Putra',
+                'nim' => '241110117',
+                'role' => 'ketua',
             ],
             [
                 'id' => 2,
-                'nama'  => 'Muhammad Fathurrahman',
-                'nim'   => '241110109',
-                'role'  => 'anggota'
+                'nama' => 'Muhammad Fathurrahman',
+                'nim' => '241110109',
+                'role' => 'anggota',
             ],
-
             [
                 'id' => 4,
-                'nama'  => 'Maria Violeta V. Wungubelen',
-                'nim'   => '241110105',
-                'role'  => 'anggota'
+                'nama' => 'Maria Violeta V. Wungubelen',
+                'nim' => '241110105',
+                'role' => 'anggota',
             ],
-          
         ];
     }
 

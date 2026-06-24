@@ -52,7 +52,8 @@
               </div>
               <div class="mt-4 h-3 overflow-hidden rounded-full bg-slate-100">
                 <div class="h-full rounded-full bg-cyan-500"
-                  style="width: {{ min(100, round(($campaign['current'] / max(1, $campaign['target'])) * 100)) }}%"></div>
+                  style="width: {{ min(100, round(($campaign['current'] / max(1, $campaign['target'])) * 100)) }}%">
+                </div>
               </div>
             </article>
           @endforeach

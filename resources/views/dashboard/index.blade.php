@@ -1,12 +1,14 @@
 <x-layout>
-  <section class="relative overflow-hidden bg-slate-50 py-20">
+  <section class="relative overflow-hidden bg-slate-50 pb-20 pt-32">
     <div class="absolute inset-x-0 top-0 -z-10 h-72 bg-emerald-100/70"></div>
 
     <div class="mx-auto max-w-6xl px-4">
       <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div class="max-w-3xl">
           <p class="text-sm uppercase tracking-[0.24em] text-emerald-600">Dashboard</p>
-          <h1 class="mt-3 text-4xl font-semibold text-slate-900 sm:text-5xl">Selamat datang, {{ $user->name }}</h1>
+          <h1
+            class="bg-linear-to-r mt-3 from-cyan-500 to-purple-700 bg-clip-text py-2 text-4xl font-semibold text-transparent sm:text-5xl">
+            Selamat datang, {{ $user->name }}</h1>
           <p class="mt-4 max-w-2xl text-lg text-slate-600">Pantau ringkasan aktivitas Anda, lihat donasi terbaru, dan
             lanjutkan campaign yang sudah dibuat.</p>
         </div>
@@ -16,7 +18,6 @@
           <div class="mt-3 space-y-2 text-sm text-slate-600">
             <p><span class="font-semibold text-slate-900">Nama:</span> {{ $user->name }}</p>
             <p><span class="font-semibold text-slate-900">Email:</span> {{ $user->email }}</p>
-            <p><span class="font-semibold text-slate-900">User ID:</span> {{ $user->id }}</p>
           </div>
           <form method="POST" action="{{ route('logout') }}" class="mt-6">
             @csrf
@@ -61,7 +62,7 @@
               <article class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
                 <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <h3 class="font-semibold text-slate-900">{{ $donation['campaign'] }}</h3>
+                    <h3 class="font-semibold text-slate-900">{{ $donation->campaign?->title ?? 'Campaign' }}</h3>
                     <p class="text-sm text-slate-500">{{ $donation['date'] }}</p>
                   </div>
                   <span class="text-lg font-semibold text-emerald-700">Rp
