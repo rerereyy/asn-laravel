@@ -8,9 +8,6 @@
           <div class="flex flex-wrap items-center gap-3">
             <span
               class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">{{ $campaign->category }}</span>
-            <span class="text-sm text-slate-500">Deadline:
-              {{ $campaign->deadline_at?->format('d M Y') ?? 'Tidak ada' }}</span>
-            <span class="text-sm text-slate-500">Lokasi: {{ $campaign->user->name ?? 'DonasiKita' }}</span>
           </div>
           <h1 class="text-4xl font-semibold text-slate-900">{{ $campaign->title }}</h1>
           <p class="leading-8 text-slate-600">{{ $campaign->description }}</p>
