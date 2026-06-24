@@ -35,29 +35,10 @@
             <div class="mt-5 h-3 overflow-hidden rounded-full bg-zinc-200">
               <div class="h-full rounded-full bg-emerald-500" style="width: {{ min(100, round($campaign['current'] / max(1, $campaign['target']) * 100)) }}%"></div>
             </div>
-           <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-    <div class="flex flex-wrap gap-2">
-    <a href="{{ route('campaigns.show', $campaign['id']) }}" 
-       class="rounded-full border border-emerald-600 px-4 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">
-       Lihat Detail
-    </a>
-
-    <a href="{{ route('campaigns.edit', $campaign['id']) }}" 
-       class="rounded-full bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600">
-       Edit
-    </a>
-
-    <form action="{{ route('campaigns.destroy', $campaign['id']) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus campaign ini?')">
-      @csrf
-      @method('DELETE')
-      <button type="submit" class="rounded-full bg-rose-600 px-4 py-2 text-xs font-semibold text-white hover:bg-rose-700">
-        Hapus
-      </button>
-    </form>
-  </div>
-
-  <span class="rounded-full bg-zinc-100 px-4 py-2 text-xs text-slate-600">{{ $campaign['donors'] }} donor</span>
-</div>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="{{ route('campaigns.show', $campaign['id']) }}" class="rounded-full border border-emerald-600 px-5 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50">Lihat Detail</a>
+              <span class="rounded-full bg-zinc-100 px-4 py-2 text-sm text-slate-600">{{ $campaign['donors'] }} donor</span>
+            </div>
           </article>
         @endforeach
       </div>
