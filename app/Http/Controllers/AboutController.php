@@ -38,8 +38,8 @@ class AboutController extends Controller
             ],
             [
                 'id' => 5,
-                'nama' => 'alio',
-                'nim' => '241110120',
+                'nama' => 'julius flaviano aleo keu',
+                'nim' => '241110082',
                 'role' => 'anggota',
             ],
         ];
