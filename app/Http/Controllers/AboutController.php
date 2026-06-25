@@ -35,8 +35,8 @@ class AboutController extends Controller
             ],
             [
                 'id' => 4,
-                'nama' => 'rey',
-                'nim' => '241110120',
+                'nama' => 'enrico reyner lumenta',
+                'nim' => '241110093',
                 'role' => 'anggota',
                 'tugas' => 'Isi sendiri'
             ],
