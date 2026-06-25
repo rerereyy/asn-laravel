@@ -29,7 +29,9 @@
       <div class="hidden items-center gap-2 pr-4 md:flex">
         @auth
           <a href="{{ route('dashboard') }}"
-            class="rounded-full bg-emerald-500 px-4 py-2 text-sm text-white">Dashboard</a>
+            class="flex size-8 items-center justify-center rounded-full bg-emerald-500 text-sm font-semibold text-white">
+            {{ str(auth()->user()->name)->substr(0, 1)->upper() }}
+          </a>
           <form method="POST" action="{{ route('logout') }}" class="inline">
             @csrf
             <button

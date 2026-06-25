@@ -6,6 +6,7 @@ use App\Models\Campaign;
 use App\Models\Comment;
 use App\Models\Donation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class CampaignController extends Controller
@@ -23,13 +24,13 @@ class CampaignController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(Campaign $campaign)
     {
-        $campaign = Campaign::with([
+        $campaign->load([
             'user',
             'donations.user',
             'comments.user'
-        ])->findOrFail($id);
+        ]);
 
         return view('campaigns.show', [
             'campaign' => $campaign
@@ -56,7 +57,7 @@ class CampaignController extends Controller
             ->store('campaigns', 'public');
 
         Campaign::create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'title' => $data['title'],
             'category' => $data['category'],
             'target_amount' => $data['target_amount'],
@@ -71,19 +72,21 @@ class CampaignController extends Controller
         return redirect()->route('campaigns.index')->with('success', 'Campaign baru berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(Campaign $campaign)
     {
-        $campaign = Campaign::findOrFail($id);
-
-        return view('campaigns.edit', [
-            'campaign' => $campaign,
-        ]);
+        abort_if(
+            $campaign->user_id !== Auth::id(),
+            403
+        );
+        return view('campaigns.edit', compact('campaign'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Campaign $campaign)
     {
-        $campaign = Campaign::findOrFail($id);
-
+        abort_if(
+            $campaign->user_id !== Auth::id(),
+            403
+        );
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:100',
@@ -118,10 +121,12 @@ class CampaignController extends Controller
             ->with('success', 'Campaign berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy(Campaign $campaign)
     {
-        $campaign = Campaign::findOrFail($id);
-
+        abort_if(
+            $campaign->user_id !== Auth::id(),
+            403
+        );
         if ($campaign->cover_image) {
             Storage::disk('public')->delete($campaign->cover_image);
         }
@@ -133,10 +138,8 @@ class CampaignController extends Controller
             ->with('success', 'Campaign berhasil dihapus.');
     }
 
-    public function donate(Request $request, $id)
+    public function donate(Request $request, Campaign $campaign)
     {
-        $campaign = Campaign::findOrFail($id);
-
         $data = $request->validate([
             'amount' => 'required|numeric|min:1000',
             'donor_message' => 'nullable|string|max:300',
@@ -146,8 +149,8 @@ class CampaignController extends Controller
         $isAnonymous = $request->boolean('is_anonymous');
 
         Donation::create([
-            'campaign_id' => $id,
-            'user_id' => auth()->id(),
+            'campaign_id' => $campaign->id,
+            'user_id' => Auth::id(),
             'amount' => $data['amount'],
             'donor_message' => $data['donor_message'] ?? 'Semoga bermanfaat untuk campaign ini.',
             'is_anonymous' => $isAnonymous,
@@ -155,22 +158,20 @@ class CampaignController extends Controller
             'paid_at' => now(),
         ]);
         $campaign->increment('current_amount', $data['amount']);
-        $campaign->increment('donor_count');
+        $campaign->increment('donor_count', 1);
 
         return back()->with('success', 'Terima kasih atas donasi Anda!');
     }
 
-    public function comment(Request $request, $id)
+    public function comment(Request $request, Campaign $campaign)
     {
-        $campaign = Campaign::findOrFail($id);
-
         $data = $request->validate([
             'content' => 'required|string|max:300',
         ]);
 
         Comment::create([
             'campaign_id' => $campaign->id,
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'content' => $data['content'],
         ]);
 
