@@ -38,15 +38,15 @@ class AboutController extends Controller
                 'nama' => 'enrico reyner lumenta',
                 'nim' => '241110093',
                 'role' => 'anggota',
-                'tugas' => 'Isi sendiri'
+                'tugas' => 'frontend2'
             ],
             [
                 'id' => 5,
                 'nama' => 'julius flaviano aleo keu',
                 'nim' => '241110082',
                 'role' => 'anggota',
-                'tugas' => 'Isi sendiri'
-            ],
+                'tugas' => 'backend2'
+            ]
         ];
     }
 
